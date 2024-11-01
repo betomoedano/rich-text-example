@@ -1,22 +1,16 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, StyleSheet, Platform, View } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import DOMComponent from "@/components/dom-components/hello-dom";
+import Editor from "@/components/dom-components/hello-dom";
 
-const IS_DOM = typeof DOMComponent !== "undefined";
+const IS_DOM = typeof Editor !== "undefined";
 
 export default function HomeScreen() {
   return (
     <>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">
-          Is DOM: {IS_DOM ? "true" : "false"}
-        </ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <DOMComponent name="Europa" />
+      <Editor />
     </>
   );
 }
