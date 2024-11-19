@@ -9,7 +9,7 @@
 body {
   margin: 0;
   padding-inline: 16px;
-  background: white;
+  /* background: white; */
   font-family: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
     sans-serif;
   font-weight: 500;
@@ -55,9 +55,9 @@ h1 {
 
 .editor-container {
   margin: 20px auto 20px auto;
+  width: 100%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 2px;
-  width: 100%;
   color: #000;
   position: relative;
   line-height: 20px;

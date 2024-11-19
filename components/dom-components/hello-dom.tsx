@@ -30,8 +30,8 @@ export default function Editor({
   setPlainText,
   setEditorState,
 }: {
-  setPlainText: (plainText: string) => Promise<void>;
-  setEditorState: (editorState: string) => Promise<void>;
+  setPlainText: React.Dispatch<React.SetStateAction<string>>;
+  setEditorState: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
   return (
     <>
