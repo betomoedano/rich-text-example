@@ -7,10 +7,12 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 
 import ExampleTheme from "./ExampleTheme";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import TreeViewPlugin from "./plugins/TreeViewPlugin";
+import { $getRoot, EditorState, LexicalEditor } from "lexical";
 
 const placeholder = "Enter some rich text...";
 
@@ -24,7 +26,13 @@ const editorConfig = {
   // The editor theme
   theme: ExampleTheme,
 };
-export default function Editor() {
+export default function Editor({
+  setPlainText,
+  setEditorState,
+}: {
+  setPlainText: (plainText: string) => Promise<void>;
+  setEditorState: (editorState: string) => Promise<void>;
+}) {
   return (
     <>
       <LexicalComposer initialConfig={editorConfig}>
@@ -39,12 +47,21 @@ export default function Editor() {
                   placeholder={
                     <div className="editor-placeholder">{placeholder}</div>
                   }
-                  onChange={(event: React.FormEvent<HTMLDivElement>) => {
-                    console.log(event.target);
-                  }}
                 />
               }
               ErrorBoundary={LexicalErrorBoundary}
+            />
+            <OnChangePlugin
+              onChange={(editorState, editor, tags) => {
+                editorState.read(() => {
+                  const root = $getRoot();
+                  const textContent = root.getTextContent();
+                  setPlainText(textContent);
+                });
+                setEditorState(JSON.stringify(editorState.toJSON()));
+              }}
+              ignoreHistoryMergeTagChange
+              ignoreSelectionChange
             />
             <HistoryPlugin />
             <AutoFocusPlugin />
